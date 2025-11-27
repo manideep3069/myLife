@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>PROJECT MAYHEM: V4</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Special+Elite&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#050505">
+    
+    <!-- iOS Support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mayhem">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+
+<body>
+    <div id="fire-overlay"></div>
+
+    <!-- SETUP -->
+    <div id="setup-screen">
+        <div class="setup-box">
+            <h2 style="font-family: 'Special Elite'; color: var(--accent); margin-bottom: 20px;">IDENTITY REQUIRED</h2>
+            <input type="text" id="setup-name" class="setup-input" placeholder="ENTER NAME">
+            <div style="text-align: left; color: #666; margin-top: 10px; font-size: 0.8rem;">DATE OF BIRTH:</div>
+            <input type="date" id="setup-dob" class="setup-input">
+            <div style="color: var(--danger); font-size: 0.7rem; margin-top: 10px;">DON'T GIVE FAKE NUMBERS. YOU MIGHT
+                FAKE YOURSELF.</div>
+            <button class="setup-btn" onclick="initializeUser()">BEGIN</button>
+        </div>
+    </div>
+
+    <!-- APP -->
+    <div class="container" id="main-app">
+        <header>
+            <button id="btn-panic"
+                style="position:absolute; top:20px; right:20px; background:transparent; border:1px solid #333; color:#333; font-family:var(--terminal); cursor:pointer; padding:5px 10px; font-size:0.8rem; z-index:10001;">PANIC</button>
+            <h1 id="header-title">PROJECT YOU</h1>
+            <div class="quote" id="dynamic-quote">Loading...</div>
+        </header>
+
+        <!-- TOTAL ENTROPY (Single Row Scrollable) -->
+        <div class="entropy-scroll-wrapper">
+            <div class="entropy-grid">
+                <div class="time-card"><span class="tc-val" id="t-years">0</span><span class="tc-label">Yrs Left</span>
+                </div>
+                <div class="time-card"><span class="tc-val" id="t-months">0</span><span class="tc-label">Mos Left</span>
+                </div>
+                <div class="time-card"><span class="tc-val" id="t-weeks">0</span><span class="tc-label">Wks Left</span>
+                </div>
+                <div class="time-card"><span class="tc-val" id="t-days">0</span><span class="tc-label">Days Left</span>
+                </div>
+                <div class="time-card"><span class="tc-val" id="t-hours">0</span><span class="tc-label">Hrs Left</span>
+                </div>
+                <div class="time-card"><span class="tc-val" id="t-minutes">0</span><span class="tc-label">Mins
+                        Left</span></div>
+                <div class="time-card"><span class="tc-val" id="t-seconds" style="color:var(--accent)">0</span><span
+                        class="tc-label">Secs Left</span></div>
+            </div>
+        </div>
+
+        <!-- NAV -->
+        <div class="nav-deck">
+            <button class="nav-btn active" onclick="tab('goals')">Goals</button>
+            <button class="nav-btn" onclick="tab('media')">Media</button>
+            <button class="nav-btn" onclick="tab('network')">Network</button>
+            <button class="nav-btn" onclick="tab('assets')">Assets</button>
+            <button class="nav-btn" onclick="tab('burn')">Burn</button>
+            <button class="nav-btn" onclick="tab('void')">Void</button>
+            <button class="nav-btn" onclick="tab('system')">System</button>
+        </div>
+
+        <!-- SECTIONS -->
+        <div id="goals" class="section active">
+            <div class="card">
+                <h2>Daily / Hourly</h2>
+                <div class="input-group"><input id="in-daily" placeholder="Task..."><button class="add-btn"
+                        onclick="add('l-daily','in-daily')">+</button></div>
+                <ul id="l-daily"></ul>
+            </div>
+            <div class="card">
+                <h2>Weekly</h2>
+                <div class="input-group"><input id="in-weekly" placeholder="Target..."><button class="add-btn"
+                        onclick="add('l-weekly','in-weekly')">+</button></div>
+                <ul id="l-weekly"></ul>
+            </div>
+            <div class="card">
+                <h2>Monthly</h2>
+                <div class="input-group"><input id="in-monthly" placeholder="Mission..."><button class="add-btn"
+                        onclick="add('l-monthly','in-monthly')">+</button></div>
+                <ul id="l-monthly"></ul>
+            </div>
+            <div class="card">
+                <h2>Yearly / Life</h2>
+                <div class="input-group"><input id="in-life" placeholder="Evolution..."><button class="add-btn"
+                        onclick="add('l-life','in-life')">+</button></div>
+                <ul id="l-life"></ul>
+            </div>
+        </div>
+
+        <div id="media" class="section">
+            <div class="card">
+                <h2>Books</h2>
+                <div class="input-group"><input id="in-book" placeholder="Title..."><button class="add-btn"
+                        onclick="add('l-book','in-book')">+</button></div>
+                <ul id="l-book"></ul>
+            </div>
+            <div class="card">
+                <h2>Movies/Series</h2>
+                <div class="input-group"><input id="in-movie" placeholder="Title..."><button class="add-btn"
+                        onclick="add('l-movie','in-movie')">+</button></div>
+                <ul id="l-movie"></ul>
+            </div>
+            <div class="card">
+                <h2>Places</h2>
+                <div class="input-group"><input id="in-place" placeholder="Location..."><button class="add-btn"
+                        onclick="add('l-place','in-place')">+</button></div>
+                <ul id="l-place"></ul>
+            </div>
+        </div>
+
+        <div id="network" class="section">
+            <div class="card">
+                <h2>Allies</h2>
+                <div class="input-group"><input id="in-ally" placeholder="Name..."><button class="add-btn"
+                        onclick="add('l-ally','in-ally')">+</button></div>
+                <ul id="l-ally"></ul>
+            </div>
+            <div class="card">
+                <h2>Targets</h2>
+                <div class="input-group"><input id="in-meet" placeholder="Name..."><button class="add-btn"
+                        onclick="add('l-meet','in-meet')">+</button></div>
+                <ul id="l-meet"></ul>
+            </div>
+            <div class="card danger-card">
+                <h2>Antagonists (Avoid)</h2>
+                <div class="input-group"><input id="in-bad" placeholder="Name/Reason..."
+                        style="color:var(--danger)"><button class="add-btn" style="background:var(--danger)"
+                        onclick="add('l-bad','in-bad')">!</button></div>
+                <ul id="l-bad"></ul>
+            </div>
+        </div>
+
+        <div id="assets" class="section">
+            <div class="card">
+                <h2>Capital</h2>
+                <div class="money-big" id="money-usd">$0.00</div>
+                <div style="text-align:right; font-size:0.7rem; color:#666; margin-bottom:10px;">(90 INR = 1 USD)</div>
+                <div class="input-group">
+                    <input type="number" id="in-rupees" placeholder="Amount in ₹ INR">
+                    <button class="add-btn" style="background:var(--money); color:#000;" onclick="addMoney()">₹</button>
+                </div>
+                <ul id="l-money"></ul>
+            </div>
+            <div class="card">
+                <h2>Values / Lessons</h2>
+                <div class="input-group"><input id="in-val" placeholder="Lesson..."><button class="add-btn"
+                        onclick="add('l-val','in-val')">+</button></div>
+                <ul id="l-val"></ul>
+            </div>
+        </div>
+
+        <div id="burn" class="section">
+            <div class="card danger-card" style="grid-column: 1 / -1;">
+                <h2>BURN JOURNAL</h2>
+                <p style="color:#666; margin-bottom:15px; font-size:0.9rem;">Write your anger, fear, or secrets. Then
+                    burn them. Nothing is saved.</p>
+                <textarea id="burn-area" placeholder="Vent here..."
+                    style="width:100%; height:200px; background:#000; color:var(--danger); border:1px solid var(--danger); padding:10px; font-family:var(--terminal); resize:none;"></textarea>
+                <button id="btn-burn" class="setup-btn"
+                    style="background:var(--danger); color:#000; margin-top:15px;">BURN IT ALL</button>
+            </div>
+        </div>
+
+        <div id="void" class="section">
+            <div class="card" style="grid-column: 1 / -1; text-align:center; padding:50px 20px;">
+                <div class="void-circle"></div>
+                <p style="color:#666; margin-top:30px;">BREATHE. FOCUS. EXIST.</p>
+            </div>
+        </div>
+
+        <div id="system" class="section">
+            <div class="card" style="grid-column: 1 / -1;">
+                <h2>System Core</h2>
+                <button class="setup-btn" onclick="exportID()" style="margin-top:0; margin-bottom:10px;">Export Data
+                    (Copy)</button>
+                <button class="setup-btn" onclick="importID()"
+                    style="margin-top:0; margin-bottom:10px; border:1px solid #fff; background:transparent; color:#fff;">Import
+                    Data (Paste)</button>
+                <button class="setup-btn" onclick="resetAll()"
+                    style="background:#000; border:1px solid var(--danger); color:var(--danger); margin-top:20px;">FACTORY
+                    RESET</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="boss-mode" class="hidden">
+        <table
+            style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; font-size:12px; color:#000; background:#fff;">
+            <tr style="background:#f0f0f0;">
+                <th style="border:1px solid #ccc; padding:5px;">A</th>
+                <th style="border:1px solid #ccc; padding:5px;">B</th>
+                <th style="border:1px solid #ccc; padding:5px;">C</th>
+                <th style="border:1px solid #ccc; padding:5px;">D</th>
+                <th style="border:1px solid #ccc; padding:5px;">E</th>
+            </tr>
+            <tr>
+                <td style="border:1px solid #ccc; padding:5px;">Q1 Report</td>
+                <td style="border:1px solid #ccc; padding:5px;">Data</td>
+                <td style="border:1px solid #ccc; padding:5px;">Analysis</td>
+                <td style="border:1px solid #ccc; padding:5px;">Trend</td>
+                <td style="border:1px solid #ccc; padding:5px;">Proj.</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #ccc; padding:5px;">Revenue</td>
+                <td style="border:1px solid #ccc; padding:5px;">45,200</td>
+                <td style="border:1px solid #ccc; padding:5px;">+5.2%</td>
+                <td style="border:1px solid #ccc; padding:5px;">Stable</td>
+                <td style="border:1px solid #ccc; padding:5px;">48,000</td>
+            </tr>
+            <!-- Repeat some rows to fill screen -->
+            ${Array(20).fill('<tr>
+                <td style="border:1px solid #ccc; padding:5px;">Item</td>
+                <td style="border:1px solid #ccc; padding:5px;">0.00</td>
+                <td style="border:1px solid #ccc; padding:5px;">-</td>
+                <td style="border:1px solid #ccc; padding:5px;">Pending</td>
+                <td style="border:1px solid #ccc; padding:5px;">0.00</td>
+            </tr>').join('')}
+        </table>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
